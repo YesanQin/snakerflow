@@ -14,8 +14,7 @@
  */
 package org.snaker.engine.helper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
@@ -24,7 +23,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  * @since 1.0
  */
 public class JsonHelper {
-	private static final Logger log = LoggerFactory.getLogger(JsonHelper.class);
+//	private static final Logger log = LoggerFactory.getLogger(JsonHelper.class);
 	/**
 	 * jackson的ObjectMapper对象
 	 */
@@ -39,7 +38,8 @@ public class JsonHelper {
 		try {
 			return mapper.writeValueAsString(object);
 		} catch (Exception e) {
-			log.warn("write to json string error:" + object, e);
+			System.out.println(e);
+//			log.warn("write to json string error:" + object, e);
 			return "";
 		}
 	}
@@ -58,8 +58,61 @@ public class JsonHelper {
 		try {
 			return mapper.readValue(jsonString, clazz);
 		} catch (Exception e) {
-			log.warn("parse json string error:" + jsonString, e);
+			System.out.println(e);
+//			log.warn("parse json string error:" + jsonString, e);
 			return null;
 		}
 	}
+
+	/*测试jsonHelper方法，注意的是：
+	1、对象的属性需要有getter方法，或者在对象的属性上面加上@JsonProperty注解，否则会出现转换异常
+	2、反序列化的时候需要对象有无参数构造方法才ok*/
+
+	public static void main(String[] args) {
+		Student student = new Student("qinys","23");
+		System.out.println(student);
+		Teacher teacher = new Teacher("xia","16");
+		System.out.println(toJson(student));
+		System.out.println(toJson(teacher));
+		String str = "{\"name\":\"qinys\",\"age\":\"23\"}";
+		String str1 = "{\"name\":\"xia\",\"age\":\"16\"}";
+		System.out.println(fromJson(str,Student.class));
+		System.out.println(fromJson(str1,Teacher.class));
+	}
 }
+	class Student{
+		Student(){}
+		private String name;
+		private String age;
+		Student(String name,String age){
+			this.name = name;
+			this.age = age;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public String getAge() {
+			return age;
+		}
+
+		@Override
+		public String toString() {
+			return "Student{" +
+					"name='" + name + '\'' +
+					", age='" + age + '\'' +
+					'}';
+		}
+	}
+	class Teacher{
+		Teacher(){}
+		Teacher(String name,String age){
+			this.name =name;
+			this.age = age;
+		}
+		@JsonProperty
+		private String name;
+		@JsonProperty
+		private String age;
+	}
