@@ -14,14 +14,6 @@
  */
 package org.snaker.engine.cfg;
 
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-
-import javax.xml.parsers.DocumentBuilder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.snaker.engine.Context;
@@ -29,16 +21,19 @@ import org.snaker.engine.SnakerEngine;
 import org.snaker.engine.SnakerException;
 import org.snaker.engine.access.transaction.TransactionInterceptor;
 import org.snaker.engine.core.ServiceContext;
-import org.snaker.engine.helper.ClassHelper;
-import org.snaker.engine.helper.ConfigHelper;
-import org.snaker.engine.helper.StreamHelper;
-import org.snaker.engine.helper.StringHelper;
-import org.snaker.engine.helper.XmlHelper;
+import org.snaker.engine.helper.*;
 import org.snaker.engine.impl.SimpleContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
 
 /**
  * 只允许应用程序存在一个Configuration实例
@@ -52,8 +47,8 @@ public class Configuration {
 	 */
 	private static final Logger log = LoggerFactory.getLogger(Configuration.class);
 	private static final String BASE_CONFIG_FILE = "base.config.xml";
-	private final static String EXT_CONFIG_FILE = "ext.config.xml";
-	private final static String USER_CONFIG_FILE = "snaker.xml";
+	private static final String EXT_CONFIG_FILE = "ext.config.xml";
+	private static final String USER_CONFIG_FILE = "snaker.xml";
 	/**
 	 * 访问数据库的对象，根据使用的orm框架进行设置。如果未提供此项设置，则按照默认orm加载方式初始化
 	 * jdbc:DataSource

@@ -23,6 +23,9 @@ import org.snaker.engine.SnakerException;
  * @since 1.0
  */
 public class StringHelper {
+	public static void main(String[] args) {
+		System.out.println(getPrimaryKey());
+	}
 	/**
 	 * 获取uuid类型的字符串
 	 * @return uuid字符串
