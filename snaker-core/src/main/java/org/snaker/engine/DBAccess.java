@@ -14,20 +14,12 @@
  */
 package org.snaker.engine;
 
-import java.util.List;
-
 import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
-import org.snaker.engine.entity.CCOrder;
-import org.snaker.engine.entity.HistoryOrder;
-import org.snaker.engine.entity.HistoryTask;
-import org.snaker.engine.entity.HistoryTaskActor;
-import org.snaker.engine.entity.Order;
+import org.snaker.engine.entity.*;
 import org.snaker.engine.entity.Process;
-import org.snaker.engine.entity.Surrogate;
-import org.snaker.engine.entity.Task;
-import org.snaker.engine.entity.TaskActor;
-import org.snaker.engine.entity.WorkItem;
+
+import java.util.List;
 
 /**
  * 数据库访问接口
@@ -71,7 +63,25 @@ public interface DBAccess {
 	 * @param taskActor 任务参与者对象
 	 */
 	public void saveTaskActor(TaskActor taskActor);
-	
+
+	/**
+	 * 保存委托代理对象
+	 * @param surrogate 委托代理对象
+	 */
+	public void saveSurrogate(Surrogate surrogate);
+
+	/**
+	 * 迁移活动实例
+	 * @param order 历史流程实例对象
+	 */
+	public void saveHistory(HistoryOrder order);
+
+	/**
+	 * 迁移活动任务
+	 * @param task 历史任务对象
+	 */
+	public void saveHistory(HistoryTask task);
+
 	/**
 	 * 更新任务对象
 	 * @param task 任务对象
@@ -97,18 +107,36 @@ public interface DBAccess {
 	public void updateProcess(Process process);
 
 	/**
-	 * 删除流程定义对象
-	 * @param process 流程定义对象
+	 * 更新实例变量（包括历史实例表）
+	 * @param order 实例对象
 	 */
-	public void deleteProcess(Process process);
-	
+	public void updateOrderVariable(Order order);
+
 	/**
 	 * 更新流程定义类别
 	 * @param type 类别
 	 * @since 1.5
 	 */
 	public void updateProcessType(String id, String type);
-	
+
+	/**
+	 * 更新历史流程实例状态
+	 * @param order 历史流程实例对象
+	 */
+	public void updateHistory(HistoryOrder order);
+
+	/**
+	 * 更新委托代理对象
+	 * @param surrogate 委托代理对象
+	 */
+	public void updateSurrogate(Surrogate surrogate);
+
+	/**
+	 * 删除流程定义对象
+	 * @param process 流程定义对象
+	 */
+	public void deleteProcess(Process process);
+
 	/**
 	 * 删除任务、任务参与者对象
 	 * @param task 任务对象
@@ -133,24 +161,6 @@ public interface DBAccess {
 	 * @param actors 参与者集合
 	 */
 	public void removeTaskActor(String taskId, String... actors);
-	
-	/**
-	 * 迁移活动实例
-	 * @param order 历史流程实例对象
-	 */
-	public void saveHistory(HistoryOrder order);
-	
-	/**
-	 * 更新历史流程实例状态
-	 * @param order 历史流程实例对象
-	 */
-	public void updateHistory(HistoryOrder order);
-	
-	/**
-	 * 迁移活动任务
-	 * @param task 历史任务对象
-	 */
-	public void saveHistory(HistoryTask task);
 
 	/**
 	 * 删除历史实例记录
@@ -164,24 +174,6 @@ public interface DBAccess {
 	 */
 	public void deleteHistoryTask(HistoryTask historyTask);
 
-    /**
-     * 更新实例变量（包括历史实例表）
-     * @param order 实例对象
-     */
-    public void updateOrderVariable(Order order);
-	
-	/**
-	 * 保存委托代理对象
-	 * @param surrogate 委托代理对象
-	 */
-	public void saveSurrogate(Surrogate surrogate);
-	
-	/**
-	 * 更新委托代理对象
-	 * @param surrogate 委托代理对象
-	 */
-	public void updateSurrogate(Surrogate surrogate);
-	
 	/**
 	 * 删除委托代理对象
 	 * @param surrogate 委托代理对象
